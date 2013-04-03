@@ -1,15 +1,15 @@
 %define gemname ohai
 Summary:	Profiles your system and emits JSON
 Name:		ruby-%{gemname}
-Version:	0.5.0
+Version:	0.6.0
 Release:	1
 License:	Apache v2.0
 Group:		Development/Languages
-URL:		http://wiki.opscode.com/display/ohai
 Source0:	http://gems.rubyforge.org/gems/%{gemname}-%{version}.gem
-# Source0-md5:	c732696877356d9fef48ac07d18dc7e5
+# Source0-md5:	ade15c3c001a88d3c1bf9a9192453384
 # Request to include: http://tickets.opscode.com/browse/OHAI-169
 Source1:	ohai.1
+URL:		http://docs.opscode.com/ohai.html
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.656
 Requires:	ruby-extlib
