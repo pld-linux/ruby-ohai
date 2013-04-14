@@ -1,14 +1,12 @@
 %define gemname ohai
 Summary:	Profiles your system and emits JSON
 Name:		ruby-%{gemname}
-Version:	6.14.0
-Release:	0.1
+Version:	6.16.0
+Release:	0.2
 License:	Apache v2.0
 Group:		Development/Languages
 Source0:	http://gems.rubyforge.org/gems/%{gemname}-%{version}.gem
-# Source0-md5:	dd0b8e12ccaf6368362958195c10d25f
-# Request to include: http://tickets.opscode.com/browse/OHAI-169
-Source1:	ohai.1
+# Source0-md5:	5193426deeb67ff7560e05000c55d4d3
 URL:		http://docs.opscode.com/ohai.html
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.656
@@ -18,6 +16,7 @@ Requires:	ruby-json
 Requires:	ruby-mixlib-cli
 Requires:	ruby-mixlib-config
 Requires:	ruby-mixlib-log
+Requires:	ruby-mixlib-shellout
 Requires:	ruby-systemu
 Requires:	ruby-yajl
 BuildArch:	noarch
@@ -53,9 +52,8 @@ install -d $RPM_BUILD_ROOT{%{ruby_vendorlibdir},%{_bindir}}
 cp -a bin/* $RPM_BUILD_ROOT%{_bindir}
 cp -a lib/* $RPM_BUILD_ROOT%{ruby_vendorlibdir}
 
-# http://tickets.opscode.com/browse/OHAI-169
 install -d $RPM_BUILD_ROOT%{_mandir}/man1
-install -Dp %{SOURCE1} $RPM_BUILD_ROOT%{_mandir}/man1/ohai.1
+cp -p docs/man/man1/ohai.1 $RPM_BUILD_ROOT%{_mandir}/man1/ohai.1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
