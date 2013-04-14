@@ -1,12 +1,12 @@
 %define gemname ohai
 Summary:	Profiles your system and emits JSON
 Name:		ruby-%{gemname}
-Version:	0.6.0
+Version:	0.6.10
 Release:	1
 License:	Apache v2.0
 Group:		Development/Languages
 Source0:	http://gems.rubyforge.org/gems/%{gemname}-%{version}.gem
-# Source0-md5:	ade15c3c001a88d3c1bf9a9192453384
+# Source0-md5:	01dea23cd76c6c7e609923810dce9607
 # Request to include: http://tickets.opscode.com/browse/OHAI-169
 Source1:	ohai.1
 URL:		http://docs.opscode.com/ohai.html
