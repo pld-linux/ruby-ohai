@@ -16,8 +16,14 @@ BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.656
 BuildRequires:	sed >= 4.0
 %if %{with tests}
+BuildRequires:	ruby-ipaddress
+BuildRequires:	ruby-mixlib-config
+BuildRequires:	ruby-mixlib-log
+BuildRequires:	ruby-mixlib-shellout
 BuildRequires:	ruby-rake
 BuildRequires:	ruby-rspec
+BuildRequires:	ruby-systemu
+BuildRequires:	ruby-yajl
 %endif
 Requires:	ruby-ipaddress
 Requires:	ruby-mixlib-cli
