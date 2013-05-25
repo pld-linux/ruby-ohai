@@ -6,11 +6,12 @@
 Summary:	Profiles your system and emits JSON
 Name:		ruby-%{gemname}
 Version:	6.16.0
-Release:	1
+Release:	2
 License:	Apache v2.0
 Group:		Development/Languages
 Source0:	https://github.com/opscode/ohai/archive/%{version}.tar.gz
 # Source0-md5:	5c00b0ba4c313bedfec62cd5e1525551
+Patch0:		virtualization-vserver.patch
 URL:		http://docs.opscode.com/ohai.html
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.656
@@ -50,6 +51,7 @@ This package contains documentation for %{name}.
 
 %prep
 %setup -q -n ohai-%{version}
+%patch0 -p1
 %{__sed} -i -e '1 s,#!.*ruby,#!%{__ruby},' bin/*
 
 # no plist and not darwin so don't care
