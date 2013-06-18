@@ -6,7 +6,7 @@
 Summary:	Profiles your system and emits JSON
 Name:		ruby-%{gemname}
 Version:	6.16.0
-Release:	2
+Release:	3
 License:	Apache v2.0
 Group:		Development/Languages
 Source0:	https://github.com/opscode/ohai/archive/%{version}.tar.gz
@@ -26,6 +26,7 @@ BuildRequires:	ruby-rspec
 BuildRequires:	ruby-systemu
 BuildRequires:	ruby-yajl
 %endif
+Requires:	lsb-release
 Requires:	ruby-ipaddress
 Requires:	ruby-mixlib-cli
 Requires:	ruby-mixlib-config
@@ -57,7 +58,7 @@ This package contains documentation for %{name}.
 # no plist and not darwin so don't care
 rm spec/unit/plugins/darwin/system_profiler_spec.rb
 
-# can't figure how ti fix -r rubygems does not help
+# can't figure how to fix -r rubygems does not help
 # ohai-6.16.0/spec/unit/plugins/ruby_spec.rb:52:in `block in <top (required)>': uninitialized cons tant Gem (NameError)
 rm spec/unit/plugins/ruby_spec.rb
 
