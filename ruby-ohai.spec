@@ -2,11 +2,11 @@
 # Conditional build:
 %bcond_without	tests		# build without tests
 
-%define gemname ohai
+%define pkgname ohai
 Summary:	Profiles your system and emits JSON
-Name:		ruby-%{gemname}
+Name:		ruby-%{pkgname}
 Version:	6.16.0
-Release:	3
+Release:	4
 License:	Apache v2.0
 Group:		Development/Languages
 Source0:	https://github.com/opscode/ohai/archive/%{version}.tar.gz
@@ -14,14 +14,14 @@ Source0:	https://github.com/opscode/ohai/archive/%{version}.tar.gz
 Patch0:		virtualization-vserver.patch
 URL:		http://docs.opscode.com/ohai.html
 BuildRequires:	rpm-rubyprov
-BuildRequires:	rpmbuild(macros) >= 1.656
+BuildRequires:	rpmbuild(macros) >= 1.665
+BuildRequires:	ruby-rake
 BuildRequires:	sed >= 4.0
 %if %{with tests}
 BuildRequires:	ruby-ipaddress
 BuildRequires:	ruby-mixlib-config
 BuildRequires:	ruby-mixlib-log
 BuildRequires:	ruby-mixlib-shellout
-BuildRequires:	ruby-rake
 BuildRequires:	ruby-rspec
 BuildRequires:	ruby-systemu
 BuildRequires:	ruby-yajl
@@ -63,6 +63,10 @@ rm spec/unit/plugins/darwin/system_profiler_spec.rb
 rm spec/unit/plugins/ruby_spec.rb
 
 %build
+rake gem
+%{__tar} -xmf pkg/ohai-%{version}.gem
+%__gem_helper spec
+
 %if %{with tests}
 # Occasionally fails with "undefined method `rfc2822' for nil:NilClass" during
 # mock. Unsure why - disable for now.
@@ -73,10 +77,11 @@ rake -r rubygems spec
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{ruby_vendorlibdir},%{_bindir},%{_mandir}/man1}
+install -d $RPM_BUILD_ROOT{%{ruby_vendorlibdir},%{ruby_specdir},%{_bindir},%{_mandir}/man1}
 cp -a bin/* $RPM_BUILD_ROOT%{_bindir}
 cp -a lib/* $RPM_BUILD_ROOT%{ruby_vendorlibdir}
 cp -p docs/man/man1/ohai.1 $RPM_BUILD_ROOT%{_mandir}/man1
+cp -p %{pkgname}-%{version}.gemspec $RPM_BUILD_ROOT%{ruby_specdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -86,5 +91,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc README.rdoc CHANGELOG NOTICE
 %attr(755,root,root) %{_bindir}/ohai
 %{_mandir}/man1/ohai.1*
-%{ruby_vendorlibdir}/ohai.rb
-%{ruby_vendorlibdir}/ohai
+%{ruby_vendorlibdir}/%{pkgname}.rb
+%{ruby_vendorlibdir}/%{pkgname}
+%{ruby_specdir}/%{pkgname}-%{version}.gemspec
