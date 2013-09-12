@@ -5,12 +5,12 @@
 %define pkgname ohai
 Summary:	Profiles your system and emits JSON
 Name:		ruby-%{pkgname}
-Version:	6.16.0
-Release:	5
+Version:	6.18.0
+Release:	1
 License:	Apache v2.0
 Group:		Development/Languages
-Source0:	https://github.com/opscode/ohai/archive/%{version}.tar.gz
-# Source0-md5:	5c00b0ba4c313bedfec62cd5e1525551
+Source0:	https://github.com/opscode/ohai/archive/%{version}/%{pkgname}-%{version}.tar.gz
+# Source0-md5:	898ee1f9395b9b7dc5c7d9779b8a6291
 Patch0:		virtualization-vserver.patch
 Patch1:		php-builddate.patch
 URL:		http://docs.opscode.com/ohai.html
