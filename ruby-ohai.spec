@@ -1,18 +1,18 @@
 #
 # Conditional build:
-%bcond_without	tests		# build without tests
+%bcond_with	tests		# build without tests
 
 %define pkgname ohai
 Summary:	Profiles your system and emits JSON
 Name:		ruby-%{pkgname}
-Version:	6.18.0
-Release:	1
+Version:	7.0.0
+Release:	0.1
 License:	Apache v2.0
 Group:		Development/Languages
-Source0:	https://github.com/opscode/ohai/archive/%{version}/%{pkgname}-%{version}.tar.gz
-# Source0-md5:	898ee1f9395b9b7dc5c7d9779b8a6291
+#Source0:	https://github.com/opscode/ohai/archive/%{version}/%{pkgname}-%{version}.tar.gz
+Source0:	https://github.com/opscode/ohai/archive/master/%{pkgname}-%{version}-bcc1557.tar.gz
+# Source0-md5:	1192ea216030e105171162b57a40ca6f
 Patch0:		virtualization-vserver.patch
-Patch1:		php-builddate.patch
 URL:		http://docs.opscode.com/ohai.html
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.665
@@ -52,9 +52,9 @@ Requires:	%{name} = %{version}-%{release}
 This package contains documentation for %{name}.
 
 %prep
-%setup -q -n ohai-%{version}
+%setup -qc
+mv ohai-*/* .
 %patch0 -p1
-%patch1 -p1
 %{__sed} -i -e '1 s,#!.*ruby,#!%{__ruby},' bin/*
 
 # no plist and not darwin so don't care
@@ -66,7 +66,7 @@ rm spec/unit/plugins/ruby_spec.rb
 
 %build
 rake gem
-%{__tar} -xmf pkg/ohai-%{version}.gem
+%{__tar} -xmf pkg/ohai-%{version}*.gem
 %__gem_helper spec
 
 %if %{with tests}
@@ -83,7 +83,10 @@ install -d $RPM_BUILD_ROOT{%{ruby_vendorlibdir},%{ruby_specdir},%{_bindir},%{_ma
 cp -a bin/* $RPM_BUILD_ROOT%{_bindir}
 cp -a lib/* $RPM_BUILD_ROOT%{ruby_vendorlibdir}
 cp -p docs/man/man1/ohai.1 $RPM_BUILD_ROOT%{_mandir}/man1
-cp -p %{pkgname}-%{version}.gemspec $RPM_BUILD_ROOT%{ruby_specdir}
+cp -p %{pkgname}-%{version}*.gemspec $RPM_BUILD_ROOT%{ruby_specdir}
+
+# testing tool (used by spec/... files)
+rm $RPM_BUILD_ROOT%{_bindir}/grab_data.rb
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -95,4 +98,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/ohai.1*
 %{ruby_vendorlibdir}/%{pkgname}.rb
 %{ruby_vendorlibdir}/%{pkgname}
-%{ruby_specdir}/%{pkgname}-%{version}.gemspec
+%{ruby_specdir}/%{pkgname}-%{version}*.gemspec
