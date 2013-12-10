@@ -5,12 +5,12 @@
 %define pkgname ohai
 Summary:	Profiles your system and emits JSON
 Name:		ruby-%{pkgname}
-Version:	6.18.0
+Version:	6.20.0
 Release:	1
 License:	Apache v2.0
 Group:		Development/Languages
 Source0:	https://github.com/opscode/ohai/archive/%{version}/%{pkgname}-%{version}.tar.gz
-# Source0-md5:	898ee1f9395b9b7dc5c7d9779b8a6291
+# Source0-md5:	1a3091bb1d06fda9e15447edbc4a2f77
 Patch0:		virtualization-vserver.patch
 Patch1:		php-builddate.patch
 URL:		http://docs.opscode.com/ohai.html
@@ -24,7 +24,7 @@ BuildRequires:	ruby-mixlib-config
 BuildRequires:	ruby-mixlib-log
 BuildRequires:	ruby-mixlib-shellout
 BuildRequires:	ruby-rspec
-BuildRequires:	ruby-systemu
+BuildRequires:	ruby-systemu >= 2.5.2
 BuildRequires:	ruby-yajl
 %endif
 Requires:	lsb-release
@@ -33,7 +33,7 @@ Requires:	ruby-mixlib-cli
 Requires:	ruby-mixlib-config
 Requires:	ruby-mixlib-log
 Requires:	ruby-mixlib-shellout
-Requires:	ruby-systemu
+Requires:	ruby-systemu >= 2.5.2
 Requires:	ruby-yajl
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
