@@ -27,6 +27,7 @@ BuildRequires:	ruby-rspec
 BuildRequires:	ruby-systemu >= 2.5.2
 BuildRequires:	ruby-yajl
 %endif
+Requires:	iproute2
 Requires:	lsb-release
 Requires:	ruby-ipaddress
 Requires:	ruby-mixlib-cli
