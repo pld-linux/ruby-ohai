@@ -6,13 +6,15 @@
 Summary:	Profiles your system and emits JSON
 Name:		ruby-%{pkgname}
 Version:	6.20.0
-Release:	2
+Release:	3
 License:	Apache v2.0
 Group:		Development/Languages
 Source0:	https://github.com/opscode/ohai/archive/%{version}/%{pkgname}-%{version}.tar.gz
 # Source0-md5:	1a3091bb1d06fda9e15447edbc4a2f77
 Patch0:		virtualization-vserver.patch
 Patch1:		php-builddate.patch
+Patch2:		https://github.com/glensc/ruby-ohai/compare/OHAI-295.patch
+# Patch2-md5:	7e0f3de1daa40df05a2aa82547d7ca67
 URL:		http://docs.opscode.com/ohai.html
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.665
@@ -57,6 +59,7 @@ This package contains documentation for %{name}.
 %setup -q -n ohai-%{version}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 %{__sed} -i -e '1 s,#!.*ruby,#!%{__ruby},' bin/*
 
 # no plist and not darwin so don't care
