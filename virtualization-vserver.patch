@@ -1,11 +1,14 @@
-detect vserver before vbox, allowing "vbox-guest" status to overwrite "vserver-host" detection
-
+detect vserver before vbox, allowing "vbox-guest" status to overwrite
+"vserver-host" detection
 https://tickets.opscode.com/browse/OHAI-479
 
---- ruby-ohai-7.0.0.alpha.0/lib/ohai/plugins/linux/virtualization.rb~	2013-11-25 21:34:08.000000000 +0200
-+++ ruby-ohai-7.0.0.alpha.0/lib/ohai/plugins/linux/virtualization.rb	2013-11-25 22:36:18.108064611 +0200
-@@ -81,6 +81,20 @@
-       virtualization[:role] = "guest"
+Eventually to be dropped in favour of using node[:virtualization][:systems]
+https://tickets.opscode.com/browse/OHAI-182
+
+--- ruby-ohai-7.4.0/lib/ohai/plugins/linux/virtualization.rb~	2014-09-06 07:18:08.000000000 +0300
++++ ruby-ohai-7.4.0/lib/ohai/plugins/linux/virtualization.rb	2014-09-18 00:30:42.946587051 +0300
+@@ -101,6 +101,23 @@
+       virtualization[:systems][:openvz] = "guest"
      end
  
 +    # Detect Linux-VServer
@@ -16,20 +19,22 @@ https://tickets.opscode.com/browse/OHAI-479
 +        virtualization[:system] = "linux-vserver"
 +        if vxid[2] == "0"
 +          virtualization[:role] = "host"
++          virtualization[:systems]["linux-vserver"] = "host"
 +        else
 +          virtualization[:role] = "guest"
++          virtualization[:systems]["linux-vserver"] = "guest"
 +        end
 +      end
 +    end
 +
++
      # http://www.dmo.ca/blog/detecting-virtualization-on-linux
      if File.exists?("/usr/sbin/dmidecode")
        so = shell_out("dmidecode")
-@@ -109,19 +123,5 @@
-         nil
+@@ -134,22 +151,6 @@
        end
      end
--
+ 
 -    # Detect Linux-VServer
 -    if File.exists?("/proc/self/status")
 -      proc_self_status = File.read("/proc/self/status")
@@ -38,10 +43,14 @@ https://tickets.opscode.com/browse/OHAI-479
 -        virtualization[:system] = "linux-vserver"
 -        if vxid[2] == "0"
 -          virtualization[:role] = "host"
+-          virtualization[:systems]["linux-vserver"] = "host"
 -        else
 -          virtualization[:role] = "guest"
+-          virtualization[:systems]["linux-vserver"] = "guest"
 -        end
 -      end
 -    end
-   end
- end
+-
+     # Detect LXC/Docker
+     #
+     # /proc/self/cgroup will look like this inside a docker container:

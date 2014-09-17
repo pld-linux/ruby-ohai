@@ -5,36 +5,37 @@
 %define pkgname ohai
 Summary:	Profiles your system and emits JSON
 Name:		ruby-%{pkgname}
-Version:	7.0.0
+Version:	7.4.0
 Release:	0.1
 License:	Apache v2.0
 Group:		Development/Languages
-#Source0:	https://github.com/opscode/ohai/archive/%{version}/%{pkgname}-%{version}.tar.gz
-Source0:	https://github.com/opscode/ohai/archive/master/%{pkgname}-%{version}-bcc1557.tar.gz
-# Source0-md5:	1192ea216030e105171162b57a40ca6f
+Source0:	https://github.com/opscode/ohai/archive/%{version}/%{pkgname}-%{version}.tar.gz
+# Source0-md5:	5275e5f79b618ce2af85311cd760b977
 Patch0:		virtualization-vserver.patch
-URL:		http://docs.opscode.com/ohai.html
+URL:		http://docs.getchef.com/ohai.html
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.665
 BuildRequires:	ruby-rake
 BuildRequires:	sed >= 4.0
 %if %{with tests}
+BuildRequires:	ruby-ffi >= 1.9
+BuildRequires:	ruby-ffi-yajl >= 1.0
 BuildRequires:	ruby-ipaddress
 BuildRequires:	ruby-mixlib-config
 BuildRequires:	ruby-mixlib-log
-BuildRequires:	ruby-mixlib-shellout
+BuildRequires:	ruby-mixlib-shellout >= 1.2
 BuildRequires:	ruby-rspec
-BuildRequires:	ruby-systemu
-BuildRequires:	ruby-yajl
+BuildRequires:	ruby-systemu >= 2.6.4
 %endif
 Requires:	lsb-release
+Requires:	ruby-ffi >= 1.9
+Requires:	ruby-ffi-yajl >= 1.0
 Requires:	ruby-ipaddress
 Requires:	ruby-mixlib-cli
 Requires:	ruby-mixlib-config
 Requires:	ruby-mixlib-log
-Requires:	ruby-mixlib-shellout
-Requires:	ruby-systemu
-Requires:	ruby-yajl
+Requires:	ruby-mixlib-shellout >= 1.2
+Requires:	ruby-systemu >= 2.6.4
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -52,8 +53,7 @@ Requires:	%{name} = %{version}-%{release}
 This package contains documentation for %{name}.
 
 %prep
-%setup -qc
-mv ohai-*/* .
+%setup -q -n ohai-%{version}
 %patch0 -p1
 %{__sed} -i -e '1 s,#!.*ruby,#!%{__ruby},' bin/*
 
@@ -85,15 +85,12 @@ cp -a lib/* $RPM_BUILD_ROOT%{ruby_vendorlibdir}
 cp -p docs/man/man1/ohai.1 $RPM_BUILD_ROOT%{_mandir}/man1
 cp -p %{pkgname}-%{version}*.gemspec $RPM_BUILD_ROOT%{ruby_specdir}
 
-# testing tool (used by spec/... files)
-rm $RPM_BUILD_ROOT%{_bindir}/grab_data.rb
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README.rdoc CHANGELOG NOTICE
+%doc README.md CHANGELOG.md RELEASE_NOTES.md OHAI_MVPS.md NOTICE
 %attr(755,root,root) %{_bindir}/ohai
 %{_mandir}/man1/ohai.1*
 %{ruby_vendorlibdir}/%{pkgname}.rb
