@@ -6,7 +6,7 @@
 Summary:	Profiles your system and emits JSON
 Name:		ruby-%{pkgname}
 Version:	6.24.2
-Release:	1
+Release:	2
 License:	Apache v2.0
 Group:		Development/Languages
 Source0:	https://github.com/opscode/ohai/archive/%{version}/%{pkgname}-%{version}.tar.gz
@@ -37,7 +37,7 @@ Requires:	ruby-mixlib-config
 Requires:	ruby-mixlib-log
 Requires:	mount
 Requires:	ruby-mixlib-shellout
-Requires:	ruby-systemu >= 2.5.2
+Requires:	ruby-systemu >= 2.5.2-3
 Requires:	ruby-yajl
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
