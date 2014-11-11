@@ -1,4 +1,6 @@
 #
+# Release Notes: https://github.com/opscode/ohai/blob/master/CHANGELOG.md
+#
 # Conditional build:
 %bcond_without	tests		# build without tests
 
