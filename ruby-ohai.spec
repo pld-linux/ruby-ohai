@@ -31,8 +31,9 @@ Requires:	lsb-release
 Requires:	ruby-ffi >= 1.9
 Requires:	ruby-ffi-yajl >= 1.0
 Requires:	ruby-ipaddress
+Requires:	ruby-mime-types >= 1.16
 Requires:	ruby-mixlib-cli
-Requires:	ruby-mixlib-config
+Requires:	ruby-mixlib-config >= 2.0
 Requires:	ruby-mixlib-log
 Requires:	ruby-mixlib-shellout >= 1.2
 Requires:	ruby-systemu >= 2.6.4
