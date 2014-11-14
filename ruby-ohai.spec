@@ -6,12 +6,13 @@
 Summary:	Profiles your system and emits JSON
 Name:		ruby-%{pkgname}
 Version:	7.4.0
-Release:	0.1
+Release:	0.2
 License:	Apache v2.0
 Group:		Development/Languages
 Source0:	https://github.com/opscode/ohai/archive/%{version}/%{pkgname}-%{version}.tar.gz
 # Source0-md5:	5275e5f79b618ce2af85311cd760b977
 Patch0:		virtualization-vserver.patch
+Patch1:		platform-pld.patch
 URL:		http://docs.getchef.com/ohai.html
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.665
@@ -56,6 +57,7 @@ This package contains documentation for %{name}.
 %prep
 %setup -q -n ohai-%{version}
 %patch0 -p1
+%patch1 -p1
 %{__sed} -i -e '1 s,#!.*ruby,#!%{__ruby},' bin/*
 
 # no plist and not darwin so don't care

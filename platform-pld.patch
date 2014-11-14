@@ -1,0 +1,16 @@
+somewhy fallback [1] no longer works
+set one in linux/platform
+
+[1] https://github.com/opscode/ohai/blob/7.4.0/lib/ohai/plugins/platform.rb#L26
+
+--- ohai-7.4.0/lib/ohai/plugins/linux/platform.rb~	2014-09-06 07:18:08.000000000 +0300
++++ ohai-7.4.0/lib/ohai/plugins/linux/platform.rb	2014-11-14 14:04:37.000000000 +0200
+@@ -121,6 +121,8 @@
+       platform_family "arch"
+     when /exherbo/
+       platform_family "exherbo"
++    when /pld/
++      platform_family "pld"
+     end
+   end
+ end
