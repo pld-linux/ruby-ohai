@@ -1,41 +1,56 @@
---- ohai-6.16.0/lib/ohai/plugins/linux/virtualization.rb~	2013-01-17 21:03:16.000000000 +0200
-+++ ohai-6.16.0/lib/ohai/plugins/linux/virtualization.rb	2013-05-25 20:52:31.871480338 +0300
-@@ -23,6 +23,20 @@
- # if it is possible to detect paravirt vs hardware virt, it should be put in
- # virtualization[:mechanism]
+detect vserver before vbox, allowing "vbox-guest" status to overwrite
+"vserver-host" detection
+https://tickets.opscode.com/browse/OHAI-479
+
+Eventually to be dropped in favour of using node[:virtualization][:systems]
+https://tickets.opscode.com/browse/OHAI-182
+
+--- ruby-ohai-7.4.0/lib/ohai/plugins/linux/virtualization.rb~	2014-09-06 07:18:08.000000000 +0300
++++ ruby-ohai-7.4.0/lib/ohai/plugins/linux/virtualization.rb	2014-09-18 00:30:42.946587051 +0300
+@@ -101,6 +101,23 @@
+       virtualization[:systems][:openvz] = "guest"
+     end
  
-+# Detect Linux-VServer
-+if File.exists?("/proc/self/status")
-+  proc_self_status = File.read("/proc/self/status")
-+  vxid = proc_self_status.match(/^(s_context|VxID): (\d+)$/)
-+  if vxid and vxid[2]
-+    virtualization[:system] = "linux-vserver"
-+    if vxid[2] == "0"
-+      virtualization[:role] = "host"
-+    else
-+      virtualization[:role] = "guest"
-+     end
-+  end
-+end
++    # Detect Linux-VServer
++    if File.exists?("/proc/self/status")
++      proc_self_status = File.read("/proc/self/status")
++      vxid = proc_self_status.match(/^(s_context|VxID): (\d+)$/)
++      if vxid and vxid[2]
++        virtualization[:system] = "linux-vserver"
++        if vxid[2] == "0"
++          virtualization[:role] = "host"
++          virtualization[:systems]["linux-vserver"] = "host"
++        else
++          virtualization[:role] = "guest"
++          virtualization[:systems]["linux-vserver"] = "guest"
++        end
++      end
++    end
 +
- ## Xen
- # /proc/xen is an empty dir for EL6 + Linode Guests
- if File.exists?("/proc/xen")
-@@ -109,17 +123,3 @@
++
+     # http://www.dmo.ca/blog/detecting-virtualization-on-linux
+     if File.exists?("/usr/sbin/dmidecode")
+       so = shell_out("dmidecode")
+@@ -134,22 +151,6 @@
+       end
+     end
  
-   end
- end
+-    # Detect Linux-VServer
+-    if File.exists?("/proc/self/status")
+-      proc_self_status = File.read("/proc/self/status")
+-      vxid = proc_self_status.match(/^(s_context|VxID): (\d+)$/)
+-      if vxid and vxid[2]
+-        virtualization[:system] = "linux-vserver"
+-        if vxid[2] == "0"
+-          virtualization[:role] = "host"
+-          virtualization[:systems]["linux-vserver"] = "host"
+-        else
+-          virtualization[:role] = "guest"
+-          virtualization[:systems]["linux-vserver"] = "guest"
+-        end
+-      end
+-    end
 -
--# Detect Linux-VServer
--if File.exists?("/proc/self/status")
--  proc_self_status = File.read("/proc/self/status")
--  vxid = proc_self_status.match(/^(s_context|VxID): (\d+)$/)
--  if vxid and vxid[2]
--    virtualization[:system] = "linux-vserver"
--    if vxid[2] == "0"
--      virtualization[:role] = "host"
--    else
--      virtualization[:role] = "guest"
--     end
--  end
--end
+     # Detect LXC/Docker
+     #
+     # /proc/self/cgroup will look like this inside a docker container:

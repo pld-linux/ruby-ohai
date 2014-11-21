@@ -2,45 +2,46 @@
 # Release Notes: https://github.com/opscode/ohai/blob/master/CHANGELOG.md
 #
 # Conditional build:
-%bcond_without	tests		# build without tests
+%bcond_with	tests		# build without tests
 
 %define pkgname ohai
 Summary:	Profiles your system and emits JSON
 Name:		ruby-%{pkgname}
-Version:	6.24.2
-Release:	2
+Version:	7.4.0
+Release:	0.3
 License:	Apache v2.0
 Group:		Development/Languages
 Source0:	https://github.com/opscode/ohai/archive/%{version}/%{pkgname}-%{version}.tar.gz
-# Source0-md5:	3a856987c10aee5ab16ac4f7b73c3a23
+# Source0-md5:	5275e5f79b618ce2af85311cd760b977
 Patch0:		virtualization-vserver.patch
-Patch1:		php-builddate.patch
-Patch2:		https://github.com/glensc/ruby-ohai/compare/OHAI-295.patch
-# Patch2-md5:	7e0f3de1daa40df05a2aa82547d7ca67
-URL:		http://docs.opscode.com/ohai.html
+Patch1:		platform-pld.patch
+URL:		http://docs.getchef.com/ohai.html
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.665
 BuildRequires:	ruby-rake
 BuildRequires:	sed >= 4.0
 %if %{with tests}
+BuildRequires:	ruby-ffi >= 1.9
+BuildRequires:	ruby-ffi-yajl >= 1.0
 BuildRequires:	ruby-ipaddress
 BuildRequires:	ruby-mixlib-config
 BuildRequires:	ruby-mixlib-log
-BuildRequires:	ruby-mixlib-shellout
+BuildRequires:	ruby-mixlib-shellout >= 1.2
 BuildRequires:	ruby-rspec
-BuildRequires:	ruby-systemu >= 2.5.2
-BuildRequires:	ruby-yajl
+BuildRequires:	ruby-systemu >= 2.6.4
 %endif
 Requires:	iproute2
 Requires:	lsb-release
+Requires:	ruby-ffi >= 1.9
+Requires:	ruby-ffi-yajl >= 1.0
 Requires:	ruby-ipaddress
+Requires:	ruby-mime-types >= 1.16
 Requires:	ruby-mixlib-cli
-Requires:	ruby-mixlib-config
+Requires:	ruby-mixlib-config >= 2.0
 Requires:	ruby-mixlib-log
 Requires:	mount
-Requires:	ruby-mixlib-shellout
-Requires:	ruby-systemu >= 2.5.2-3
-Requires:	ruby-yajl
+Requires:	ruby-mixlib-shellout >= 1.2
+Requires:	ruby-systemu >= 2.6.4
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -61,7 +62,6 @@ This package contains documentation for %{name}.
 %setup -q -n ohai-%{version}
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 %{__sed} -i -e '1 s,#!.*ruby,#!%{__ruby},' bin/*
 
 # no plist and not darwin so don't care
@@ -73,7 +73,7 @@ rm spec/unit/plugins/ruby_spec.rb
 
 %build
 rake gem
-%{__tar} -xmf pkg/ohai-%{version}.gem
+%{__tar} -xmf pkg/ohai-%{version}*.gem
 %__gem_helper spec
 
 %if %{with tests}
@@ -90,16 +90,16 @@ install -d $RPM_BUILD_ROOT{%{ruby_vendorlibdir},%{ruby_specdir},%{_bindir},%{_ma
 cp -a bin/* $RPM_BUILD_ROOT%{_bindir}
 cp -a lib/* $RPM_BUILD_ROOT%{ruby_vendorlibdir}
 cp -p docs/man/man1/ohai.1 $RPM_BUILD_ROOT%{_mandir}/man1
-cp -p %{pkgname}-%{version}.gemspec $RPM_BUILD_ROOT%{ruby_specdir}
+cp -p %{pkgname}-%{version}*.gemspec $RPM_BUILD_ROOT%{ruby_specdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README.rdoc CHANGELOG.md NOTICE
+%doc README.md CHANGELOG.md RELEASE_NOTES.md OHAI_MVPS.md NOTICE
 %attr(755,root,root) %{_bindir}/ohai
 %{_mandir}/man1/ohai.1*
 %{ruby_vendorlibdir}/%{pkgname}.rb
 %{ruby_vendorlibdir}/%{pkgname}
-%{ruby_specdir}/%{pkgname}-%{version}.gemspec
+%{ruby_specdir}/%{pkgname}-%{version}*.gemspec
