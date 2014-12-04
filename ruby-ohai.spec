@@ -15,6 +15,7 @@ Source0:	https://github.com/opscode/ohai/archive/%{version}/%{pkgname}-%{version
 # Source0-md5:	b28339ec7f835a2ed4ec0f876178fb14
 Patch0:		virtualization-vserver.patch
 Patch1:		platform-pld.patch
+Patch2:		soft-net-dhcp.patch
 URL:		http://docs.getchef.com/ohai.html
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.665
@@ -34,6 +35,7 @@ BuildRequires:	ruby-systemu >= 2.6.4
 %endif
 Requires:	iproute2
 Requires:	lsb-release
+Requires:	mount
 Requires:	ruby-ffi >= 1.9
 Requires:	ruby-ffi-yajl >= 1.1
 Requires:	ruby-ipaddress
@@ -41,9 +43,9 @@ Requires:	ruby-mime-types >= 1.16
 Requires:	ruby-mixlib-cli
 Requires:	ruby-mixlib-config >= 2.0
 Requires:	ruby-mixlib-log
-Requires:	mount
 Requires:	ruby-mixlib-shellout >= 2.0.0
 Requires:	ruby-systemu >= 2.6.4
+Suggests:	ruby-net-dhcp
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -64,6 +66,7 @@ This package contains documentation for %{name}.
 %setup -q -n ohai-%{version}
 #%patch0 -p1
 %patch1 -p1
+%patch2 -p1
 %{__sed} -i -e '1 s,#!.*ruby,#!%{__ruby},' bin/*
 
 # no plist and not darwin so don't care

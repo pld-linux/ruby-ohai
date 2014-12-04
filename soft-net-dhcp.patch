@@ -1,0 +1,21 @@
+require net/dhcp only when cloudstack hint present
+
+--- ./lib/ohai/mixin/cloudstack_metadata.rb~	2014-12-01 22:01:15.000000000 +0200
++++ ./lib/ohai/mixin/cloudstack_metadata.rb	2014-12-04 17:21:55.363338588 +0200
+@@ -17,7 +17,6 @@
+ 
+ require 'ohai/mixin/ec2_metadata'
+ require 'ohai/hints'
+-require 'net/dhcp'
+ require 'socket'
+ 
+ 
+@@ -30,6 +29,8 @@
+         response = ''
+         if Ohai::Hints.hint?('cloudstack')
+           begin
++			require 'net/dhcp'
++
+             request = DHCP::Discover.new
+ 
+             listensock = UDPSocket.new
