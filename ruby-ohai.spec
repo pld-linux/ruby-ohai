@@ -7,12 +7,12 @@
 %define pkgname ohai
 Summary:	Profiles your system and emits JSON
 Name:		ruby-%{pkgname}
-Version:	7.4.0
+Version:	7.6.0
 Release:	0.3
 License:	Apache v2.0
 Group:		Development/Languages
 Source0:	https://github.com/opscode/ohai/archive/%{version}/%{pkgname}-%{version}.tar.gz
-# Source0-md5:	5275e5f79b618ce2af85311cd760b977
+# Source0-md5:	b28339ec7f835a2ed4ec0f876178fb14
 Patch0:		virtualization-vserver.patch
 Patch1:		platform-pld.patch
 URL:		http://docs.getchef.com/ohai.html
@@ -22,25 +22,25 @@ BuildRequires:	ruby-rake
 BuildRequires:	sed >= 4.0
 %if %{with tests}
 BuildRequires:	ruby-ffi >= 1.9
-BuildRequires:	ruby-ffi-yajl >= 1.0
+BuildRequires:	ruby-ffi-yajl >= 1.1
 BuildRequires:	ruby-ipaddress
 BuildRequires:	ruby-mixlib-config
 BuildRequires:	ruby-mixlib-log
-BuildRequires:	ruby-mixlib-shellout >= 1.2
+BuildRequires:	ruby-mixlib-shellout >= 2.0.0
 BuildRequires:	ruby-rspec
 BuildRequires:	ruby-systemu >= 2.6.4
 %endif
 Requires:	iproute2
 Requires:	lsb-release
 Requires:	ruby-ffi >= 1.9
-Requires:	ruby-ffi-yajl >= 1.0
+Requires:	ruby-ffi-yajl >= 1.1
 Requires:	ruby-ipaddress
 Requires:	ruby-mime-types >= 1.16
 Requires:	ruby-mixlib-cli
 Requires:	ruby-mixlib-config >= 2.0
 Requires:	ruby-mixlib-log
 Requires:	mount
-Requires:	ruby-mixlib-shellout >= 1.2
+Requires:	ruby-mixlib-shellout >= 2.0.0
 Requires:	ruby-systemu >= 2.6.4
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -60,7 +60,7 @@ This package contains documentation for %{name}.
 
 %prep
 %setup -q -n ohai-%{version}
-%patch0 -p1
+#%patch0 -p1
 %patch1 -p1
 %{__sed} -i -e '1 s,#!.*ruby,#!%{__ruby},' bin/*
 
