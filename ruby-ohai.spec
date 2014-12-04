@@ -13,7 +13,6 @@ License:	Apache v2.0
 Group:		Development/Languages
 Source0:	https://github.com/opscode/ohai/archive/%{version}/%{pkgname}-%{version}.tar.gz
 # Source0-md5:	b28339ec7f835a2ed4ec0f876178fb14
-Patch0:		virtualization-vserver.patch
 Patch1:		platform-pld.patch
 Patch2:		soft-net-dhcp.patch
 URL:		http://docs.getchef.com/ohai.html
@@ -64,7 +63,6 @@ This package contains documentation for %{name}.
 
 %prep
 %setup -q -n ohai-%{version}
-#%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %{__sed} -i -e '1 s,#!.*ruby,#!%{__ruby},' bin/*
