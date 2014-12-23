@@ -8,7 +8,7 @@
 Summary:	Profiles your system and emits JSON
 Name:		ruby-%{pkgname}
 Version:	7.6.0
-Release:	0.3
+Release:	0.7
 License:	Apache v2.0
 Group:		Development/Languages
 Source0:	https://github.com/opscode/ohai/archive/%{version}/%{pkgname}-%{version}.tar.gz
@@ -28,7 +28,7 @@ BuildRequires:	ruby-ffi-yajl >= 1.1
 BuildRequires:	ruby-ipaddress
 BuildRequires:	ruby-mixlib-config
 BuildRequires:	ruby-mixlib-log
-BuildRequires:	ruby-mixlib-shellout >= 2.0.0
+BuildRequires:	ruby-mixlib-shellout >= 1.2
 BuildRequires:	ruby-rspec
 BuildRequires:	ruby-systemu >= 2.6.4
 %endif
@@ -42,7 +42,7 @@ Requires:	ruby-mime-types >= 1.16
 Requires:	ruby-mixlib-cli
 Requires:	ruby-mixlib-config >= 2.0
 Requires:	ruby-mixlib-log
-Requires:	ruby-mixlib-shellout >= 2.0.0
+Requires:	ruby-mixlib-shellout >= 1.2
 Requires:	ruby-systemu >= 2.6.4
 Suggests:	ruby-net-dhcp
 BuildArch:	noarch
@@ -66,6 +66,15 @@ This package contains documentation for %{name}.
 %patch1 -p1
 %patch2 -p1
 %{__sed} -i -e '1 s,#!.*ruby,#!%{__ruby},' bin/*
+
+# don't need shellout 2.0 yet, but 2.0 is ok
+%{__sed} -i -e '/mixlib-shellout/ s/">= 2.0.0.rc.0", "< 3.0"/">= 1.2", "< 3.0"/' %{pkgname}.gemspec
+# optional
+%{__sed} -i -e '/net-dhcp/d' %{pkgname}.gemspec
+# platform specific and optional
+%{__sed} -i -e '/wmi-lite/d' %{pkgname}.gemspec
+# dev dep
+%{__sed} -i -e '/rake/d' %{pkgname}.gemspec
 
 # no plist and not darwin so don't care
 rm spec/unit/plugins/darwin/system_profiler_spec.rb
