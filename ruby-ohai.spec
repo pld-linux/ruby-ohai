@@ -7,14 +7,14 @@
 %define pkgname ohai
 Summary:	Profiles your system and emits JSON
 Name:		ruby-%{pkgname}
-Version:	7.6.0
-Release:	1
+Version:	8.4.0
+Release:	0.1
 License:	Apache v2.0
 Group:		Development/Languages
 Source0:	https://github.com/opscode/ohai/archive/%{version}/%{pkgname}-%{version}.tar.gz
-# Source0-md5:	b28339ec7f835a2ed4ec0f876178fb14
+# Source0-md5:	23f1bf5e4faaadbd9bdd9aec84ff4505
 Patch1:		platform-pld.patch
-Patch2:		soft-net-dhcp.patch
+#Patch2:		soft-net-dhcp.patch
 URL:		http://docs.getchef.com/ohai.html
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.665
@@ -64,7 +64,7 @@ This package contains documentation for %{name}.
 %prep
 %setup -q -n ohai-%{version}
 %patch1 -p1
-%patch2 -p1
+#%patch2 -p1
 %{__sed} -i -e '1 s,#!.*ruby,#!%{__ruby},' bin/*
 
 # don't need shellout 2.0 yet, but 2.0 is ok
