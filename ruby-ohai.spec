@@ -35,16 +35,7 @@ Requires:	iproute2
 Requires:	lsb-release
 Requires:	mount
 Requires:	ruby(abi) >= 2.0
-Requires:	ruby-ffi >= 1.9
-Requires:	ruby-ffi-yajl >= 1.1
-Requires:	ruby-ipaddress
 Requires:	ruby-mime-types >= 1.16
-Requires:	ruby-mixlib-cli
-Requires:	ruby-mixlib-config >= 2.0
-Requires:	ruby-mixlib-log
-Requires:	ruby-mixlib-shellout >= 1.2
-Requires:	ruby-systemu >= 2.6.4
-Suggests:	ruby-net-dhcp
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
