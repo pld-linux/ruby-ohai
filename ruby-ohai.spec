@@ -73,6 +73,7 @@ This package contains documentation for %{name}.
 %{__sed} -i -e '/net-dhcp/d' %{pkgname}.gemspec
 # platform specific and optional
 %{__sed} -i -e '/wmi-lite/d' %{pkgname}.gemspec
+%{__sed} -i -e '/plist/d' %{pkgname}.gemspec
 # dev dep
 %{__sed} -i -e '/rake/d' %{pkgname}.gemspec
 
