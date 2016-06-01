@@ -35,6 +35,7 @@ BuildRequires:	ruby-systemu >= 2.6.4
 Requires:	iproute2
 Requires:	lsb-release
 Requires:	mount
+Requires:	ruby(abi) >= 2.0
 Requires:	ruby-ffi >= 1.9
 Requires:	ruby-ffi-yajl >= 1.1
 Requires:	ruby-ipaddress
