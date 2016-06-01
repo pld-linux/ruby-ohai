@@ -80,13 +80,15 @@ This package contains documentation for %{name}.
 rm spec/unit/plugins/darwin/system_profiler_spec.rb
 
 # can't figure how to fix -r rubygems does not help
-# ohai-6.16.0/spec/unit/plugins/ruby_spec.rb:52:in `block in <top (required)>': uninitialized cons tant Gem (NameError)
+# ohai-6.16.0/spec/unit/plugins/ruby_spec.rb:52:in `block in <top (required)>': uninitialized constant Gem (NameError)
 rm spec/unit/plugins/ruby_spec.rb
 
 %build
-rake -Ilib gem
-%{__tar} -xmf pkg/ohai-%{version}*.gem
-%__gem_helper spec
+# make gemspec self-contained
+ruby -r rubygems -e 'spec = eval(File.read("%{pkgname}.gemspec"))
+	File.open("%{pkgname}-%{version}.gemspec", "w") do |file|
+	file.puts spec.to_ruby_for_cache
+end'
 
 %if %{with tests}
 # Occasionally fails with "undefined method `rfc2822' for nil:NilClass" during
