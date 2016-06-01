@@ -35,7 +35,6 @@ Requires:	iproute2
 Requires:	lsb-release
 Requires:	mount
 Requires:	ruby(abi) >= 2.0
-Requires:	ruby-mime-types >= 1.16
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
