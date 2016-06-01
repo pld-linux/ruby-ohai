@@ -14,7 +14,6 @@ Group:		Development/Languages
 Source0:	https://github.com/opscode/ohai/archive/%{version}/%{pkgname}-%{version}.tar.gz
 # Source0-md5:	7a2182e562bab7dcc48e0b68e07daf92
 Patch1:		platform-pld.patch
-#Patch2:		soft-net-dhcp.patch
 URL:		http://docs.getchef.com/ohai.html
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.665
@@ -65,7 +64,6 @@ This package contains documentation for %{name}.
 %prep
 %setup -q -n ohai-%{version}
 %patch1 -p1
-#%patch2 -p1
 %{__sed} -i -e '1 s,#!.*ruby,#!%{__ruby},' bin/*
 
 # don't need shellout 2.0 yet, but 2.0 is ok
