@@ -19,8 +19,6 @@ BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.665
 BuildRequires:	ruby-rake
 BuildRequires:	sed >= 4.0
-# rake gem uses installed ohai version not version we intend to build!
-BuildConflicts:	ruby-ohai
 %if %{with tests}
 BuildRequires:	ruby-ffi >= 1.9
 BuildRequires:	ruby-ffi-yajl >= 1.1
