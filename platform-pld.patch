@@ -3,14 +3,14 @@ set one in linux/platform
 
 [1] https://github.com/opscode/ohai/blob/7.4.0/lib/ohai/plugins/platform.rb#L26
 
---- ohai-8.16.0/lib/ohai/plugins/linux/platform.rb~	2016-05-12 01:13:29.000000000 +0300
-+++ ohai-8.16.0/lib/ohai/plugins/linux/platform.rb	2016-06-01 22:53:00.774030283 +0300
-@@ -199,6 +199,8 @@
-       platform_family "arch"
+--- ohai-14.1.7/lib/ohai/plugins/linux/platform.rb~	2018-05-29 19:14:33.000000000 +0300
++++ ohai-14.1.7/lib/ohai/plugins/linux/platform.rb	2018-07-16 16:13:58.058756979 +0300
+@@ -147,6 +147,8 @@
+       "arch"
      when /exherbo/
-       platform_family "exherbo"
+       "exherbo"
 +    when /pld/
-+      platform_family "pld"
++      "pld"
      when /alpine/
-       platform_family "alpine"
-     end
+       "alpine"
+     when /clearlinux/
