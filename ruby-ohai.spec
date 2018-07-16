@@ -7,19 +7,20 @@
 %define pkgname ohai
 Summary:	Profiles your system and emits JSON
 Name:		ruby-%{pkgname}
-Version:	7.6.0
-Release:	5
+Version:	14.2.0
+Release:	0.1
 License:	Apache v2.0
 Group:		Development/Languages
-Source0:	https://github.com/opscode/ohai/archive/%{version}/%{pkgname}-%{version}.tar.gz
-# Source0-md5:	b28339ec7f835a2ed4ec0f876178fb14
+Source0:	https://github.com/opscode/ohai/archive/v%{version}/%{pkgname}-%{version}.tar.gz
+# Source0-md5:	2758eda1e642dec6991c839a8c3d1488
 Patch1:		platform-pld.patch
-Patch2:		soft-net-dhcp.patch
 URL:		http://docs.getchef.com/ohai.html
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.665
 BuildRequires:	ruby-rake
 BuildRequires:	sed >= 4.0
+BuildRequires:	rubocop
+BuildRequires:	ruby-chefstyle
 # rake gem uses installed ohai version not version we intend to build!
 BuildConflicts:	ruby-ohai
 %if %{with tests}
@@ -64,7 +65,6 @@ This package contains documentation for %{name}.
 %prep
 %setup -q -n ohai-%{version}
 %patch1 -p1
-%patch2 -p1
 %{__sed} -i -e '1 s,#!.*ruby,#!%{__ruby},' bin/*
 
 # don't need shellout 2.0 yet, but 2.0 is ok
