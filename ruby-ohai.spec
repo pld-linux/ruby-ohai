@@ -7,12 +7,12 @@
 %define pkgname ohai
 Summary:	Profiles your system and emits JSON
 Name:		ruby-%{pkgname}
-Version:	14.2.0
+Version:	14.2.4
 Release:	1
 License:	Apache v2.0
 Group:		Development/Languages
 Source0:	https://github.com/opscode/ohai/archive/v%{version}/%{pkgname}-%{version}.tar.gz
-# Source0-md5:	2758eda1e642dec6991c839a8c3d1488
+# Source0-md5:	09fe81cb0b178bad4ad9898c6cc72c57
 Patch1:		platform-pld.patch
 URL:		https://docs.getchef.com/ohai.html
 BuildRequires:	rpm-rubyprov
@@ -91,7 +91,6 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{ruby_vendorlibdir},%{ruby_specdir},%{_bindir},%{_mandir}/man1}
 cp -a bin/* $RPM_BUILD_ROOT%{_bindir}
 cp -a lib/* $RPM_BUILD_ROOT%{ruby_vendorlibdir}
-cp -p docs/man/man1/ohai.1 $RPM_BUILD_ROOT%{_mandir}/man1
 cp -p %{pkgname}-%{version}*.gemspec $RPM_BUILD_ROOT%{ruby_specdir}
 
 %clean
@@ -101,7 +100,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README.md CHANGELOG.md RELEASE_NOTES.md OHAI_MVPS.md NOTICE
 %attr(755,root,root) %{_bindir}/ohai
-%{_mandir}/man1/ohai.1*
 %{ruby_vendorlibdir}/%{pkgname}.rb
 %{ruby_vendorlibdir}/%{pkgname}
 %{ruby_specdir}/%{pkgname}-%{version}*.gemspec
