@@ -1,5 +1,5 @@
 #
-# Release Notes: https://github.com/opscode/ohai/blob/master/CHANGELOG.md
+# Release Notes: https://github.com/chef/ohai/blob/master/CHANGELOG.md
 #
 # Conditional build:
 %bcond_with	tests		# build without tests
