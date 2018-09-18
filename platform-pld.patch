@@ -3,15 +3,14 @@ set one in linux/platform
 
 [1] https://github.com/opscode/ohai/blob/7.4.0/lib/ohai/plugins/platform.rb#L26
 
---- ohai-14.2.0/lib/ohai/plugins/linux/platform.rb~	2018-06-04 21:41:29.000000000 +0200
-+++ ohai-14.2.0/lib/ohai/plugins/linux/platform.rb	2018-07-16 21:00:42.751122191 +0200
-@@ -152,6 +152,9 @@
-     when /clearlinux/
-       "clearlinux"
-     end
+--- ohai-14.1.7/lib/ohai/plugins/linux/platform.rb~	2018-05-29 19:14:33.000000000 +0300
++++ ohai-14.1.7/lib/ohai/plugins/linux/platform.rb	2018-07-16 16:13:58.058756979 +0300
+@@ -147,6 +147,8 @@
+       "arch"
+     when /exherbo/
+       "exherbo"
 +    when /pld/
 +      "pld"
-+    end
-   end
- 
-   collect_data(:linux) do
+     when /alpine/
+       "alpine"
+     when /clearlinux/
