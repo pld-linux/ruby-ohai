@@ -7,12 +7,12 @@
 %define pkgname ohai
 Summary:	Profiles your system and emits JSON
 Name:		ruby-%{pkgname}
-Version:	14.2.4
+Version:	14.14.0
 Release:	1
 License:	Apache v2.0
 Group:		Development/Languages
 Source0:	https://github.com/opscode/ohai/archive/v%{version}/%{pkgname}-%{version}.tar.gz
-# Source0-md5:	09fe81cb0b178bad4ad9898c6cc72c57
+# Source0-md5:	ac98ad48a9a84ebe07296f228dd9886b
 Patch1:		platform-pld.patch
 URL:		https://docs.getchef.com/ohai.html
 BuildRequires:	rpm-rubyprov
