@@ -8,7 +8,7 @@
 Summary:	Profiles your system and emits JSON
 Name:		ruby-%{pkgname}
 Version:	14.2.4
-Release:	1
+Release:	2
 License:	Apache v2.0
 Group:		Development/Languages
 Source0:	https://github.com/opscode/ohai/archive/v%{version}/%{pkgname}-%{version}.tar.gz
