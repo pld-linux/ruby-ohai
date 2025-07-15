@@ -51,7 +51,7 @@ This package contains documentation for %{name}.
 
 %prep
 %setup -q -n ohai-%{version}
-%patch1 -p1
+%patch -P1 -p1
 %{__sed} -i -e '1 s,#!.*ruby,#!%{__ruby},' bin/*
 
 # don't need shellout 2.0 yet, but 2.0 is ok
